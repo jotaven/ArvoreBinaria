@@ -18,5 +18,10 @@ public class Main {
 
         a.remove(3);
         a.printInOrder();
+        a.printTree();
+
+        System.out.println();
+        System.out.println(a.search(3));
+        System.out.println(a.search(4));
     }
 }

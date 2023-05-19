@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinaryTree {
     Node root;
 
@@ -7,6 +10,91 @@ public class BinaryTree {
 
     public BinaryTree(int value) {
         this.root = new Node(value);
+    }
+
+    public void printTree() {
+        int maxLevel = maxLevel(root);
+        List<Node> treeRoot = new ArrayList<>();
+        treeRoot.add(root);
+        System.out.println("Max level: " + maxLevel);
+        printSubTree(treeRoot, 1, maxLevel);
+    }
+
+    private void printSubTree(List<Node> nodes, int level, int maxLevel) {
+        if (nodes.isEmpty() || isAllElementsNull(nodes))
+            return;
+
+        int floor = maxLevel - level;
+        int edgeLines = (int) Math.pow(2, Math.max(floor - 1, 0));
+        int firstSpaces = (int) Math.pow(2, floor) - 1;
+        int betweenSpaces = (int) Math.pow(2, floor + 1) - 1;
+
+        System.out.printf("\nfloor: %d. edgeLines: %d. firstSpaces: %d. betweenSpaces: %d\n", floor, edgeLines, firstSpaces, betweenSpaces);
+
+        printWhitespaces(firstSpaces);
+
+        List<Node> newNodes = new ArrayList<>();
+        for (Node node : nodes) {
+            if (node != null) {
+                System.out.print(node.value);
+                newNodes.add(node.left);
+                newNodes.add(node.right);
+            } else {
+                newNodes.add(null);
+                newNodes.add(null);
+                System.out.print(" ");
+            }
+            printWhitespaces(betweenSpaces);
+        }
+        System.out.println();
+
+        for (int i = 1; i <= edgeLines; i++) {
+            for (Node node : nodes) {
+                printWhitespaces(firstSpaces - i);
+                if (node == null) {
+                    printWhitespaces(edgeLines + edgeLines + i + 1);
+                    continue;
+                }
+
+                if (node.left != null)
+                    System.out.print("/");
+                else
+                    printWhitespaces(1);
+
+                printWhitespaces(i + i - 1);
+
+                if (node.right != null)
+                    System.out.print("\\");
+                else
+                    printWhitespaces(1);
+
+                printWhitespaces(edgeLines + edgeLines - i);
+            }
+            System.out.println();
+        }
+
+        printSubTree(newNodes, level + 1, maxLevel);
+    }
+
+    private void printWhitespaces(int count) {
+        for (int i = 0; i < count; i++)
+            System.out.print(" ");
+    }
+
+    private int maxLevel(Node node) {
+        if (node == null)
+            return 0;
+
+        return Math.max(maxLevel(node.left), maxLevel(node.right)) + 1;
+    }
+
+    private boolean isAllElementsNull(List<Node> list) {
+        for (Node node : list) {
+            if (node != null)
+                return false;
+        }
+
+        return true;
     }
 
     public void insert(int value) {
@@ -60,7 +148,28 @@ public class BinaryTree {
         return current;
     }
 
-    // Esquerda, Elemento, Direita
+    public Node search(int value) {
+        return searchRecursive(this.root, value);
+    }
+
+    private Node searchRecursive(Node node, int value) {
+
+        Node search = null;
+
+        if (node != null) {
+            if (node.value == value) {
+                search = node;
+                return search;
+            }
+            search = searchRecursive(node.left, value);
+            if (search == null) {
+                search = searchRecursive(node.right, value);
+            }
+        }
+        return search;
+
+    }
+
     public void printInOrder() {
         printInOrderRecursive(root);
         System.out.println();
@@ -73,7 +182,7 @@ public class BinaryTree {
             printInOrderRecursive(current.right);
         }
     }
-    // Pós-Ordem: Esquerda, Direita, Elemento
+
     public void printPosOrder() {
         printPosOrderRecursive(root);
         System.out.println();
@@ -87,7 +196,7 @@ public class BinaryTree {
         }
     }
 
-    // Pré-Ordem: Elemento, Esquerda, Direita
+
     public void printPreOrder() {
         printPreOrderRecursive(root);
         System.out.println();
