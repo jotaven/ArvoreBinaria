@@ -29,7 +29,7 @@ public class BinaryTree {
         int firstSpaces = (int) Math.pow(2, floor) - 1;
         int betweenSpaces = (int) Math.pow(2, floor + 1) - 1;
 
-        System.out.printf("\nfloor: %d. edgeLines: %d. firstSpaces: %d. betweenSpaces: %d\n", floor, edgeLines, firstSpaces, betweenSpaces);
+        //System.out.printf("\nfloor: %d. edgeLines: %d. firstSpaces: %d. betweenSpaces: %d\n", floor, edgeLines, firstSpaces, betweenSpaces);
 
         printWhitespaces(firstSpaces);
 
@@ -116,6 +116,10 @@ public class BinaryTree {
     }
 
     public void remove(int value) {
+        if (isEmpty()) {
+            System.out.println("Árvore vazia!");
+            return;
+        }
         removeRecursive(root, value);
     }
 
@@ -136,19 +140,22 @@ public class BinaryTree {
             } else if (current.left == null) {
                 current = current.right;
             } else {
-                Node subLeft = current.left;
-                while (subLeft.left != null) {
-                    subLeft = subLeft.left;
+                Node aux = current.left;
+                while (aux.right != null) {
+                    aux = aux.right;
                 }
-
-                current.value = subLeft.value;
-                current.right = removeRecursive(current.right, subLeft.value);
+                current.value = aux.value;
+                current.left = removeRecursive(current.left, aux.value);
             }
         }
         return current;
     }
 
     public Node search(int value) {
+        if (isEmpty()) {
+            System.out.println("Árvore vazia!");
+            return null;
+        }
         return searchRecursive(this.root, value);
     }
 
@@ -208,5 +215,9 @@ public class BinaryTree {
             printPreOrderRecursive(current.left);
             printPreOrderRecursive(current.right);
         }
+    }
+
+    public boolean isEmpty() {
+        return root == null;
     }
 }
