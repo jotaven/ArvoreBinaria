@@ -1,10 +1,10 @@
 public class Node {
-    int value;
+    Student student;
     Node left;
     Node right;
 
-    public Node(int value) {
-        this.value = value;
+    public Node(Student student) {
+        this.student = student;
         this.left = null;
         this.right = null;
     }
@@ -13,23 +13,23 @@ public class Node {
     public String toString() {
         if(left != null && right != null) {
             return "Node{" +
-                    "value=" + value +
-                    ", left=" + left.value +
-                    ", right=" + right.value +
+                    "value=" + student.name +
+                    ", left=" + left.student.name +
+                    ", right=" + right.student.name +
                     '}';
         } else if (left != null) {
             return "Node{" +
-                    "value=" + value +
-                    ", left=" + left.value +
+                    "value=" + student.name +
+                    ", left=" + left.student.name +
                     '}';
         } else if (right != null) {
             return "Node{" +
-                    "value=" + value +
-                    ", right=" + right.value +
+                    "value=" + student.name +
+                    ", right=" + right.student.name +
                     '}';
         } else {
             return "Node{" +
-                    "value=" + value +
+                    "value=" + student.name +
                     '}';
         }
     }

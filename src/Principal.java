@@ -19,10 +19,11 @@ public class Principal {
             System.out.println("2. Inserir");
             System.out.println("3. Buscar");
             System.out.println("4. Remover");
-            System.out.println("5. Deletar arvore");
+            System.out.println("5. Esvaziar arvore");
             System.out.println("0. Sair\n");
             System.out.print("Opção: ");
             opt = sc.next();
+            sc.nextLine();
 
             switch (opt) {
                 case "1" -> showTree();
@@ -54,21 +55,33 @@ public class Principal {
             System.out.println("4. Graficamente");
             System.out.print("Opção: ");
             opt = sc.next();
-
+            sc.nextLine();
             clear();
+
+            String stringOpt;
+            do {
+                System.out.println("Qual dado que deseja?");
+                System.out.println("1. Nome");
+                System.out.println("2. RGM");
+                System.out.print("Opção: ");
+                stringOpt = sc.nextLine();
+                clear();
+            } while (!stringOpt.equals("1") && !stringOpt.equals("2"));
+
+            boolean stringBool = stringOpt.equals("1");
 
             switch (opt) {
                 case "1" -> {
                     System.out.println("Pre-Order: ");
-                    tree.printPreOrder();
+                    tree.printPreOrder(stringBool);
                 }
                 case "2" -> {
                     System.out.println("In-Order: ");
-                    tree.printInOrder();
+                    tree.printInOrder(stringBool);
                 }
                 case "3" -> {
                     System.out.println("Pos-Order: ");
-                    tree.printPosOrder();
+                    tree.printPosOrder(stringBool);
                 }
                 case "4" -> {
                     tree.printTree();
@@ -80,9 +93,11 @@ public class Principal {
     }
 
     public static void insertTree() {
-        System.out.print("Qual valor você deseja inserir? ");
-        int value = sc.nextInt();
-        tree.insert(value);
+        System.out.print("Qual o nome do novo aluno? ");
+        String name = sc.nextLine();
+        System.out.printf("Qual o rgm de %s? ", name);
+        int rgm = sc.nextInt();
+        tree.insert(new Student(name, rgm));
         clear();
     }
 
@@ -94,7 +109,7 @@ public class Principal {
     }
 
     public static void deleteTree() {
-        System.out.println("Você realmente deseja deletar a arvore? (Y/n)");
+        System.out.println("Você realmente deseja esvaziar a arvore? (Y/n)");
         String opt;
         do {
             opt = sc.nextLine().toLowerCase();
@@ -109,7 +124,7 @@ public class Principal {
     }
 
     public static void searchTree() {
-        System.out.print("Qual valor você deseja buscar? ");
+        System.out.print("Qual o rgm do aluno que você deseja buscar? ");
         int value = sc.nextInt();
         Node search = tree.search(value);
         clear();
@@ -129,14 +144,13 @@ public class Principal {
     }
 
     public static void secretExample() {
-        tree.insert(5);
-        tree.insert(2);
-        tree.insert(4);
-        tree.insert(3);
-        tree.insert(8);
-        tree.insert(9);
-        tree.insert(6);
-        tree.insert(10);
+        tree.insert(new Student("João", 50));
+        tree.insert(new Student("Pedro", 12));
+        tree.insert(new Student("José", 156));
+        tree.insert(new Student("Álvaro", 23));
+        tree.insert(new Student("Bruna", 1));
+        tree.insert(new Student("Marcos", 54));
+        tree.insert(new Student("Richarlyson", 7));
 
         clear();
         System.out.println("Elementos inseridos!");

@@ -8,8 +8,8 @@ public class BinaryTree {
         this.root = null;
     }
 
-    public BinaryTree(int value) {
-        this.root = new Node(value);
+    public BinaryTree(Student student) {
+        this.root = new Node(student);
     }
 
     public void printTree() {
@@ -36,7 +36,7 @@ public class BinaryTree {
         List<Node> newNodes = new ArrayList<>();
         for (Node node : nodes) {
             if (node != null) {
-                System.out.print(node.value);
+                System.out.print(node.student.rgm);
                 newNodes.add(node.left);
                 newNodes.add(node.right);
             } else {
@@ -97,19 +97,19 @@ public class BinaryTree {
         return true;
     }
 
-    public void insert(int value) {
-        root = insertRecursive(root, value);
+    public void insert(Student student) {
+        root = insertRecursive(root, student);
     }
 
-    private Node insertRecursive(Node current, int value) {
+    private Node insertRecursive(Node current, Student student) {
         if (current == null) {
-            return new Node(value);
+            return new Node(student);
         }
 
-        if (value < current.value) {
-            current.left = insertRecursive(current.left, value);
-        } else if (value > current.value) {
-            current.right = insertRecursive(current.right, value);
+        if (student.rgm < current.student.rgm) {
+            current.left = insertRecursive(current.left, student);
+        } else if (student.rgm > current.student.rgm) {
+            current.right = insertRecursive(current.right, student);
         }
 
         return current;
@@ -128,9 +128,9 @@ public class BinaryTree {
             return null;
         }
 
-        if (value < current.value) {
+        if (value < current.student.rgm) {
             current.left = removeRecursive(current.left, value);
-        } else if (value > current.value) {
+        } else if (value > current.student.rgm) {
             current.right = removeRecursive(current.right, value);
         } else {
             if (current.left == null && current.right == null) {
@@ -144,8 +144,8 @@ public class BinaryTree {
                 while (aux.right != null) {
                     aux = aux.right;
                 }
-                current.value = aux.value;
-                current.left = removeRecursive(current.left, aux.value);
+                current.student = aux.student;
+                current.left = removeRecursive(current.left, value);
             }
         }
         return current;
@@ -164,7 +164,7 @@ public class BinaryTree {
         Node search = null;
 
         if (node != null) {
-            if (node.value == value) {
+            if (node.student.rgm == value) {
                 search = node;
                 return search;
             }
@@ -177,21 +177,37 @@ public class BinaryTree {
 
     }
 
-    public void printInOrder() {
-        printInOrderRecursive(root);
+    public void printInOrder(boolean string) {
+        if (string) {
+            printInOrderStringRecursive(root);
+        } else {
+            printInOrderRecursive(root);
+        }
         System.out.println();
     }
 
     private void printInOrderRecursive(Node current) {
         if (current != null) {
             printInOrderRecursive(current.left);
-            System.out.print(current.value + " ");
+            System.out.print(current.student.rgm + " ");
             printInOrderRecursive(current.right);
         }
     }
 
-    public void printPosOrder() {
-        printPosOrderRecursive(root);
+    private void printInOrderStringRecursive(Node current) {
+        if (current != null) {
+            printInOrderStringRecursive(current.left);
+            System.out.print(current.student.name + " ");
+            printInOrderStringRecursive(current.right);
+        }
+    }
+
+    public void printPosOrder(boolean string) {
+        if (string) {
+            printPosOrderStringRecursive(root);
+        } else {
+            printPosOrderRecursive(root);
+        }
         System.out.println();
     }
 
@@ -199,21 +215,41 @@ public class BinaryTree {
         if (current != null) {
             printPosOrderRecursive(current.left);
             printPosOrderRecursive(current.right);
-            System.out.print(current.value + " ");
+            System.out.print(current.student.rgm + " ");
+        }
+    }
+
+    private void printPosOrderStringRecursive(Node current) {
+        if (current != null) {
+            printPosOrderStringRecursive(current.left);
+            printPosOrderStringRecursive(current.right);
+            System.out.print(current.student.name + " ");
         }
     }
 
 
-    public void printPreOrder() {
-        printPreOrderRecursive(root);
+    public void printPreOrder(boolean string) {
+        if (string) {
+            printPreOrderStringRecursive(root);
+        } else {
+            printPreOrderRecursive(root);
+        }
         System.out.println();
     }
 
     private void printPreOrderRecursive(Node current) {
         if (current != null) {
-            System.out.print(current.value + " ");
+            System.out.print(current.student.rgm + " ");
             printPreOrderRecursive(current.left);
             printPreOrderRecursive(current.right);
+        }
+    }
+
+    private void printPreOrderStringRecursive(Node current) {
+        if (current != null) {
+            System.out.print(current.student.name + " ");
+            printPreOrderStringRecursive(current.left);
+            printPreOrderStringRecursive(current.right);
         }
     }
 
