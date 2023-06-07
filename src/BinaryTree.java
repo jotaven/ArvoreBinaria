@@ -29,6 +29,7 @@ public class BinaryTree {
         int firstSpaces = (int) Math.pow(2, floor) - 1;
         int betweenSpaces = (int) Math.pow(2, floor + 1) - 1;
 
+        //teste pos
         //System.out.printf("\nfloor: %d. edgeLines: %d. firstSpaces: %d. betweenSpaces: %d\n", floor, edgeLines, firstSpaces, betweenSpaces);
 
         printWhitespaces(firstSpaces);
@@ -61,7 +62,8 @@ public class BinaryTree {
                 else
                     printWhitespaces(1);
 
-                printWhitespaces(i + i - 1);
+                // -2 ou -1 espaços (qual funciona melhor?) LEMBRETE
+                printWhitespaces(i + i + String.valueOf(node.student.rgm).length() - 2);
 
                 if (node.right != null)
                     System.out.print("\\");
@@ -115,12 +117,12 @@ public class BinaryTree {
         return current;
     }
 
-    public void remove(int value) {
+    public boolean remove(int value) {
         if (isEmpty()) {
             System.out.println("Árvore vazia!");
-            return;
+            return false;
         }
-        removeRecursive(root, value);
+        return removeRecursive(root, value) != null;
     }
 
     public Node removeRecursive(Node current, int value) {

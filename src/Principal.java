@@ -10,11 +10,11 @@ public class Principal {
 
     public static void menu() {
         String opt;
-        System.out.println("   ----------------------   ");
+        System.out.println("----------------------------");
         System.out.println("------ ARVORE BINARIA ------");
-        System.out.println("   ----------------------   \n");
+        System.out.println("----------------------------\n");
         do {
-            System.out.println("---- Menu ----\n");
+            System.out.println("→ MENU\n");
             System.out.println("1. Exibir arvore");
             System.out.println("2. Inserir");
             System.out.println("3. Buscar");
@@ -57,18 +57,21 @@ public class Principal {
             opt = sc.next();
             sc.nextLine();
             clear();
-
             String stringOpt;
-            do {
-                System.out.println("Qual dado que deseja?");
-                System.out.println("1. Nome");
-                System.out.println("2. RGM");
-                System.out.print("Opção: ");
-                stringOpt = sc.nextLine();
-                clear();
-            } while (!stringOpt.equals("1") && !stringOpt.equals("2"));
+            boolean stringBool = false;
 
-            boolean stringBool = stringOpt.equals("1");
+            if (!opt.equals("4")) {
+                do {
+                    System.out.println("Qual dado que deseja?");
+                    System.out.println("1. Nome");
+                    System.out.println("2. RGM");
+                    System.out.print("Opção: ");
+                    stringOpt = sc.nextLine();
+                    clear();
+                } while (!stringOpt.equals("1") && !stringOpt.equals("2"));
+
+                stringBool = stringOpt.equals("1");
+            }
 
             switch (opt) {
                 case "1" -> {
@@ -102,7 +105,7 @@ public class Principal {
     }
 
     public static void removeTree() {
-        System.out.print("Qual valor você deseja remover? ");
+        System.out.print("Qual o rgm do aluno que você deseja remover? ");
         int value = sc.nextInt();
         tree.remove(value);
         clear();
